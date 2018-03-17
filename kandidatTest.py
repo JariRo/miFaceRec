@@ -73,7 +73,7 @@ def collect_dataset():
 
 
 def collectImages():
-    folder = "people/" + input('Person: ').lower() 
+    folder = "people/" + raw_input('Person: ').lower()
     cv2.namedWindow('Frame', cv2.WINDOW_AUTOSIZE)
     cap = VideoCamera()
     detector = FaceDetector('haarcascade_frontalface_default.xml')
@@ -221,4 +221,4 @@ def live_recognition():
                 break
 
 #live_recognition()
-collectImages()
+#collectImages()
