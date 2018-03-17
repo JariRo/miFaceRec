@@ -105,9 +105,9 @@ def collectImages():
                 print ("Live Video interrupted")
                 break
             cv2.destroyAllWindows()
-        else:
-            cv2.destroyAllWindows()
-            print ("This name already taken")
+    else:
+        cv2.destroyAllWindows()
+        print ("This name already taken")
 
 
 def train_models():
@@ -220,5 +220,5 @@ def live_recognition():
             if cv2.waitKey(40) & 0xFF == 27:
                 break
 
-live_recognition()
-#collectImages()
+#live_recognition()
+collectImages()
