@@ -73,7 +73,7 @@ def collect_dataset():
 
 
 def collectImages():
-    folder = "people/" + input('Person: ').lower() #Input Your name
+    folder = "people/" + input('Person: ').lower() 
     cv2.namedWindow('Frame', cv2.WINDOW_AUTOSIZE)
     cap = VideoCamera()
     detector = FaceDetector('haarcascade_frontalface_default.xml')
