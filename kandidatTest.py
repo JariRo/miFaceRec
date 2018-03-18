@@ -220,5 +220,5 @@ def live_recognition():
             if cv2.waitKey(40) & 0xFF == 27:
                 break
 
-#live_recognition()
+live_recognition()
 #collectImages()
