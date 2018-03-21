@@ -76,3 +76,6 @@ def theThreaded():
 
     cv2.destroyAllWindows()
     cv.stop()
+
+notThreaded()
+theThreaded()
