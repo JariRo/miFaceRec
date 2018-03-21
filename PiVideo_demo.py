@@ -44,8 +44,9 @@ def notThreaded():
             break
 
     fps.stop()
-    print ("[INFO] elapsed time: {:.2f}").format(fps.elapsed())
-    print ("[INFO] approx. FPS: {:.2f}").format(fps.fps())
+    print("[INFO] elasped time: {:.2f}".format(fps.elapsed()))
+    print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+
 
     cv2.destroyAllWindows()
     stream.close()
