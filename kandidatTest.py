@@ -12,7 +12,28 @@ from IPython.display import clear_output
 from FaceDetector import FaceDetector
 from VideoCamera import VideoCamera
 
+'''
+def runMenu():
+    print "*" * 10 + "Menu" + "*" * 10
 
+    print "1: Collect and Train models"
+    print "2: Live Recognition"
+    print "3: Exit"
+
+    usrInput = raw_input("Select menu option: ")
+
+    if usrInput == "1":
+        collectImages()
+        runMenu()
+    elif usrInput == "2":
+        live_recognition()
+        runMenu()
+    elif usrInput == "3":
+        exit()
+    else:
+        print "Please select one of the options listed"
+        runMenu()
+'''
 
 def cut_faces(image, faces_coord):
     faces = []
@@ -49,7 +70,7 @@ def resize(images, size=(50, 50)):
 def normalize_faces(frame, faces_coord):
     faces = cut_faces(frame, faces_coord)
     faces = normalize_intensity(faces)
-    #faces = resize(faces)
+    faces = resize(faces)
     return faces
 
 def draw_rectangle(frame, faces_coord):
@@ -101,20 +122,23 @@ def collectImages():
                 cv2.waitKey(50)
                 timer += 50
             except KeyboardInterrupt:
+                del cap
                 cv2.destroyAllWindows()
                 print ("Live Video interrupted")
                 break
-            cv2.destroyAllWindows()
     else:
+        del cap
         cv2.destroyAllWindows()
         print ("This name already taken")
 
+    del cap
+    cv2.destroyAllWindows()
 
 def train_models():
     images, labels, labels_dic = collect_dataset()
 
     rec_eig = cv2.face.EigenFaceRecognizer_create()
-    #rec_eig.train(images, labels)
+    rec_eig.train(images, labels)
 
     rec_fisher = cv2.face.FisherFaceRecognizer_create()
     #rec_fisher.train(images, labels)
@@ -129,13 +153,13 @@ def train_models():
 
 def make_prediction():
     themodels = train_models()
-    eig = themodels[0]
-    fish = themodels[1]
+    rec_eig = themodels[0]
+    #fish = themodels[1]
     lbph = themodels[2]
 
     labels_dic = themodels[3]
 
-    webcam = VideoCamera(0)
+    webcam = VideoCamera()
     detector = FaceDetector("haarcascade_frontalface_default.xml")
     frame = webcam.get_frame()
     faces_coord = detector.detect(frame)
@@ -146,36 +170,19 @@ def make_prediction():
     plt.show()
     del webcam
 
-    #collector = cv2.face.MinDistancePredictCollection()
-
-    '''
-    rec_eig.predict(face, collector)
-    conf = collector.getDist()
-    pred = collector.getLabel()
-    '''
-    prediction, confidence = eig.predict(face)
+    prediction, confidence = rec_eig.predict(face)
     print ('Eigen faces -> prediction: ' + labels_dic.get(prediction).capitalize() + " Confidence: " + str(round(confidence)))
 
-    '''
-    rec_fisher.predict(face, collector)
-    conf = collector.getDist()
-    pred = collector.getLabel()
-    '''
-    prediction, confidence = fish.predict(face)
-    print ('Fisher Faces -> prediction: ' + labels_dic.get(prediction).capitalize() + " Confidence: " + str(round(confidence)))
+    #prediction, confidence = fish.predict(face)
+    #print ('Fisher Faces -> prediction: ' + labels_dic.get(prediction).capitalize() + " Confidence: " + str(round(confidence)))
 
-    '''
-    rec_lbph.predict(face, collector)
-    conf = collector.getDist()
-    pred = collector.getLabel()
-    '''
     prediction, confidence = lbph.predict(face)
     print ('LBPH -> prediction: ' + labels_dic.get(prediction).capitalize() + " Confidence: " + str(round(confidence)))
 
 
 def live_recognition():
     detector = FaceDetector("haarcascade_frontalface_default.xml")
-    webcame = VideoCamera(0)
+    webcam = VideoCamera(0)
     cv2.namedWindow('Frame', cv2.WINDOW_AUTOSIZE)
     models = train_models()
 
@@ -183,7 +190,7 @@ def live_recognition():
     labels_dic = models[3]
 
     while True:
-        frame = webcame.get_frame()
+        frame = webcam.get_frame()
         faces_coord = detector.detect(frame, True) #detects more than 1 face
 
         if len(faces_coord) > 0:
@@ -210,15 +217,20 @@ def live_recognition():
                         cv2.FONT_HERSHEY_PLAIN, 3, (66, 53, 243), 2)
 
             draw_rectangle(frame, faces_coord)
-            cv2.imshow("Jari och Oliver", frame)
+            cv2.imshow("Testing", frame)
             if cv2.waitKey(40) & 0xFF == 27:
+                del frame
                 cv2.destroyAllWindows()
                 break
         else:
             cv2.putText(frame, "ESC to exit", (5, frame.shape[0] - 5), cv2.FONT_HERSHEY_PLAIN, 3, (66, 53, 243), 2, cv2.LINE_AA)
-            cv2.imshow("Jari och Oliver", frame)
+            cv2.imshow("Testing", frame)
             if cv2.waitKey(40) & 0xFF == 27:
+                del frame
+                cv2.destroyAllWindows()
                 break
 
-live_recognition()
+#live_recognition()
 #collectImages()
+make_prediction()
+#runMenu()
