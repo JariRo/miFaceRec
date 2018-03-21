@@ -76,7 +76,7 @@ def theThreaded():
     print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 
     cv2.destroyAllWindows()
-    cv.stop()
+    vs.stop()
 
 notThreaded()
 theThreaded()
