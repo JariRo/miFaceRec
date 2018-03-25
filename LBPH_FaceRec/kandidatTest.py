@@ -153,7 +153,7 @@ def train_models():
 
 def make_prediction():
     themodels = train_models()
-    rec_eig = themodels[0]
+    #rec_eig = themodels[0]
     #fish = themodels[1]
     lbph = themodels[2]
 
@@ -170,8 +170,8 @@ def make_prediction():
     plt.show()
     del webcam
 
-    prediction, confidence = rec_eig.predict(face)
-    print ('Eigen faces -> prediction: ' + labels_dic.get(prediction).capitalize() + " Confidence: " + str(round(confidence)))
+    #prediction, confidence = rec_eig.predict(face)
+    #print ('Eigen faces -> prediction: ' + labels_dic.get(prediction).capitalize() + " Confidence: " + str(round(confidence)))
 
     #prediction, confidence = fish.predict(face)
     #print ('Fisher Faces -> prediction: ' + labels_dic.get(prediction).capitalize() + " Confidence: " + str(round(confidence)))
@@ -231,6 +231,6 @@ def live_recognition():
                 break
 
 #live_recognition()
-#collectImages()
-make_prediction()
+collectImages()
+#make_prediction()
 #runMenu()
