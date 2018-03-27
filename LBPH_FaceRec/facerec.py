@@ -176,7 +176,7 @@ def live_recognition():
     models = train_models()
     lbph = models[2]
     labels_dic = models[3]
-    threshold = 45
+    threshold = 100
     detector = FaceDetector("haarcascade_frontalface_default.xml")
     vs = VideoStream(usePiCamera=args["picamera"] > 0).start()
     time.sleep(2.0)
