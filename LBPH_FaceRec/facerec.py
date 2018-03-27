@@ -133,7 +133,7 @@ def collectImages():
         os.makedirs(folder)
         counter = 0
         timer = 0
-        while counter < 20:
+        while counter < 13:
             frame = vs.read()
             #frame = imutils.resize(frame, width=600)
             faces_coord = detector.detect(frame)
