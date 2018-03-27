@@ -1,7 +1,7 @@
 from webcamvideostream import WebcamVideoStream
 
 class VideoStream:
-    def __init__(self, src=0, usePiCamera=False, resolution=(320, 240), framerate=32):
+    def __init__(self, src=0, usePiCamera=False, resolution=(370, 290), framerate=32):
         if usePiCamera:
             from pivideostream import PiVideoStream
 
